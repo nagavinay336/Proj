@@ -49,3 +49,8 @@ public class SelectionSort {
 		System.out.println();
 	}
 }
+
+
+
+//Space Complexity - O(n)
+//Time Complexity - Best case,Worst Case and Average Case - O(n^2)
