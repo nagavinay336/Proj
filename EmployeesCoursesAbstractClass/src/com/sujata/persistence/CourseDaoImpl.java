@@ -27,7 +27,10 @@ public class CourseDaoImpl implements CourseDao {
 		for (Course course : courses) {
 			if (course.getCourseId().equals(cID)) {
 				Employee[] employees = courses[index].getEmployees();
-
+				
+				if(Course.getEmpCount()==10) {
+					throw new CourseRegistrationFullException("Course Registration Full");
+				}
 				employees[Course.getEmpCount()] = employee;
 				courses[index].setEmployees(employees);
 
