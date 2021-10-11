@@ -60,20 +60,21 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 	@Override
 	public int returnBook(int bookId, int accountId)
 			throws SQLException, ClassNotFoundException, IssueDateGreaterException {
-		int fine = calculateFine(bookId, accountId);
-		int numCopies = numBookAvailable(bookId);
-		int numBooks = numOfBooksIssued(accountId);
-		if (numBooks > 0) {
-			increaseNumBooksAvailable(numCopies, bookId);
-			decreaseNumBooksIssued(numBooks, accountId);
-			addFine(bookId, accountId, fine);
-			setReturned(bookId, accountId);
-			return fine;
-		}
-		return -1;
+//		int fine = calculateFine(bookId, accountId);
+//		int numCopies = numBookAvailable(bookId);
+//		int numBooks = numOfBooksIssued(accountId);
+//		if (numBooks > 0) {
+//			increaseNumBooksAvailable(numCopies, bookId);
+//			decreaseNumBooksIssued(numBooks, accountId);
+//			addFine(bookId, accountId, fine);
+//			setReturned(bookId, accountId);
+//			return fine;
+//		}
+//		return -1;
+		return 0;
 	}
 
-	private void setReturned(int bookId, int accountId) throws ClassNotFoundException, SQLException {
+	public void setReturned(int bookId, int accountId) throws ClassNotFoundException, SQLException {
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
@@ -88,7 +89,7 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 
 	}
 
-	int numBookAvailable(int bookId) throws SQLException, ClassNotFoundException {
+	public int numBookAvailable(int bookId) throws SQLException, ClassNotFoundException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
 
@@ -107,7 +108,7 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 		return 0;
 	}
 
-	void decreaseNumBooksAvailable(int numCopies, int bookId) throws ClassNotFoundException, SQLException {
+	public void decreaseNumBooksAvailable(int numCopies, int bookId) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
 
@@ -118,7 +119,7 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 		preparedStatement.executeUpdate();
 	}
 
-	void increaseNumBooksAvailable(int numCopies, int bookId) throws ClassNotFoundException, SQLException {
+	public void increaseNumBooksAvailable(int numCopies, int bookId) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
 
@@ -144,7 +145,7 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 		return res;
 	}
 
-	void decreaseNumBooksIssued(int numBooks, int accountId) throws ClassNotFoundException, SQLException {
+	public void decreaseNumBooksIssued(int numBooks, int accountId) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
 
@@ -155,7 +156,7 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 		preparedStatement.executeUpdate();
 	}
 
-	void increaseNumBooksIssued(int numBooks, int accountId) throws ClassNotFoundException, SQLException {
+	public void increaseNumBooksIssued(int numBooks, int accountId) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
 
@@ -166,7 +167,7 @@ public class BookIssueDaoImplementation implements BookIssueDao {
 		preparedStatement.executeUpdate();
 	}
 
-	int addFine(int bookId, int accountId, int fine) throws ClassNotFoundException, SQLException {
+	public int addFine(int bookId, int accountId, int fine) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/LibraryDB", "root", "123456");
 

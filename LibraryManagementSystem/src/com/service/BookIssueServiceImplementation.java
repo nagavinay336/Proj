@@ -14,6 +14,7 @@ import com.persistance.BookIssueDaoImplementation;
 public class BookIssueServiceImplementation implements BookIssueService {
 
 	BookIssueDao bookIssueDao = new BookIssueDaoImplementation();
+	BookIssueDaoImplementation bookIssueImpl = new BookIssueDaoImplementation();
 
 	@Override
 	public String issueBook(int bookId, int accountId)
@@ -24,7 +25,18 @@ public class BookIssueServiceImplementation implements BookIssueService {
 	@Override
 	public int returnBook(int bookId, int accountId)
 			throws ClassNotFoundException, SQLException, IssueDateGreaterException {
-		return bookIssueDao.returnBook(bookId, accountId);
+
+		int fine = bookIssueImpl.calculateFine(bookId, accountId);
+		int numCopies = bookIssueImpl.numBookAvailable(bookId);
+		int numBooks = bookIssueImpl.numOfBooksIssued(accountId);
+		if (numBooks > 0) {
+			bookIssueImpl.increaseNumBooksAvailable(numCopies, bookId);
+			bookIssueImpl.decreaseNumBooksIssued(numBooks, accountId);
+			bookIssueImpl.addFine(bookId, accountId, fine);
+			bookIssueImpl.setReturned(bookId, accountId);
+			return fine;
+		}
+		return -1;
 	}
 
 	@Override
